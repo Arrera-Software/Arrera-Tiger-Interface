@@ -3,7 +3,6 @@ from objet.CArreraTiger import*
 from tkinter import filedialog 
 from tkinter.messagebox import*
 import threading as th
-from PIL import Image, ImageTk
 import configparser
 
 class CArreraTigerUI :
@@ -37,18 +36,18 @@ class CArreraTigerUI :
         labelInstall = Label(self.__frameInstall,text="Installation en cours",bg="white",fg="black",font=("arial","30"))
         # Widget fenetre principal
         labelTitle =  Label(self.__frameMain,text="Arrera Tiger",bg="white",fg="black",font=("arial","30"))
-        btnValider = Button(self.__frameMain,text="Installer",bg="white",fg="black",font=("arial","15"),command=self.__install)
+        btnValider = Button(self.__frameMain,text="Installer copilote",bg="white",fg="black",font=("arial","15"),command=self.__install)
         # Affichage
         self.__screen.configure(menu=self.__topMenu)
         self.__frameMain.pack()
         labelInstall.place(relx=0.5,rely=0.5,anchor="center")
-        btnValider.place(relx=0.5, rely=1.0, anchor="s")  
+        btnValider.place(relx=0.5,rely=0.5,anchor="center")  
         labelTitle.place(relx=0.5, rely=0.0, anchor="n") 
     
     def show(self):
         listeSoft = self.__objTiger.listSoft()
         menuSoft = OptionMenu(self.__frameMain,self.__varSoft,*listeSoft)
-        menuSoft.place(relx=0.5,rely=0.5,anchor="center")
+        #menuSoft.place(relx=0.5,rely=0.5,anchor="center")
         self.__varSoft.set(listeSoft[0])
         self.__screen.mainloop()
     
@@ -59,7 +58,8 @@ class CArreraTigerUI :
         showinfo("Arrera : Tiger","Dossier enregistrer")
     
     def __install(self):
-        soft = self.__varSoft.get()
+        #soft = self.__varSoft.get()
+        soft = "copilote"
         folder = self.__fileConfig.lectureJSON("file")
         if (folder==""):
             showerror("Arrera : Tiger","Aucun dossier n'a etais defini")
