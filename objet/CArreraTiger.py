@@ -59,3 +59,6 @@ class CArreraTiger :
             return 2
         except Exception as e:
             return 3 
+    
+    def getJsonObjet(self):
+        return self.__json

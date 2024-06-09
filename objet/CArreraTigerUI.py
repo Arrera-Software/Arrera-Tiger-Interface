@@ -12,6 +12,7 @@ class CArreraTigerUI :
         self.__imagePath = "image/ArreraTiger.png" 
         # Objet Tiger
         self.__objTiger = CArreraTiger("https://raw.githubusercontent.com/Arrera-Software/Software-debot/main/arrerasoft.json")
+        self.__system = OS()
         # Fenetre
         self.__screen = Tk()
         self.__screen.title("Arrera : Tiger")
@@ -70,4 +71,21 @@ class CArreraTigerUI :
             theardInstall.join()
             self.__frameInstall.pack_forget()
             self.__frameMain.pack()
+            print(self.__getName(soft))
             showinfo("Arrera : Tiger","Logiciel installer")
+    
+    def __getName(self,soft:str):
+        linux = self.__system.osLinux()
+        windows = self.__system.osWindows()
+        fileJson = self.__objTiger.getJsonObjet()
+        if ((linux==False) and (windows == True)):
+            dictFolder = fileJson.lectureJSONDict("nameFolderWindows")
+            dictLogiciel = dictFolder[soft]
+            return [dictLogiciel["nameexe"],dictLogiciel["nameFolder"]]
+        else :
+            if ((linux==True) and (windows == False)):
+                dictFolder = fileJson.lectureJSONDict("nameFolderLinux")
+                dictLogiciel = dictFolder[soft]
+                return [dictLogiciel["nameexe"],dictLogiciel["nameFolder"]]
+            else :
+                return ["-1","-1"]
