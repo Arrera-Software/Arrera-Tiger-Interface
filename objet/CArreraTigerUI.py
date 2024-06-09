@@ -68,20 +68,13 @@ class CArreraTigerUI :
             self.__frameInstall.pack()
             self.__screen.update()
             theardInstall = th.Thread(target=self.__objTiger.install,args=(soft,"cache/"+soft+".zip",folder,))
+            theardIniFile = th.Thread(target=self.__writeIniFile,args=(soft,folder,))
             theardInstall.start()
+            theardIniFile.start()
             theardInstall.join()
+            theardIniFile.join()
             self.__frameInstall.pack_forget()
             self.__frameMain.pack()
-            # Ecriture dans un fichier ini 
-            listFolder = self.__getName(soft)
-            # Créez un objet ConfigParser
-            config = configparser.ConfigParser()
-            # Lisez le fichier .ini
-            config.read('arreraSoft.ini')
-            config.set(soft,"exe",listFolder[0]+".exe")
-            config.set(soft,"folder",folder+listFolder[1])
-            with open('arreraSoft.ini', 'w') as configfile:
-                config.write(configfile)
             showinfo("Arrera : Tiger","Logiciel installer")
     
     def __getName(self,soft:str):
@@ -99,3 +92,15 @@ class CArreraTigerUI :
                 return [dictLogiciel["nameexe"],dictLogiciel["nameFolder"]]
             else :
                 return ["-1","-1"]
+    
+    def __writeIniFile(self,soft:str,folder:str):
+        # Ecriture dans un fichier ini 
+        listFolder = self.__getName(soft)
+        # Créez un objet ConfigParser
+        config = configparser.ConfigParser()
+        # Lisez le fichier .ini
+        config.read('arreraSoft.ini')
+        config.set(soft,"exe",listFolder[0]+".exe")
+        config.set(soft,"folder",folder+listFolder[1])
+        with open('arreraSoft.ini', 'w') as configfile:
+            config.write(configfile)
