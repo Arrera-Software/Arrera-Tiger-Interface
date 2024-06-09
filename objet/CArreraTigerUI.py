@@ -4,6 +4,7 @@ from tkinter import filedialog
 from tkinter.messagebox import*
 import threading as th
 from PIL import Image, ImageTk
+import configparser
 
 class CArreraTigerUI :
     def __init__(self):
@@ -71,7 +72,16 @@ class CArreraTigerUI :
             theardInstall.join()
             self.__frameInstall.pack_forget()
             self.__frameMain.pack()
-            print(self.__getName(soft))
+            # Ecriture dans un fichier ini 
+            listFolder = self.__getName(soft)
+            # Créez un objet ConfigParser
+            config = configparser.ConfigParser()
+            # Lisez le fichier .ini
+            config.read('arreraSoft.ini')
+            config.set(soft,"exe",listFolder[0]+".exe")
+            config.set(soft,"folder",folder+listFolder[1])
+            with open('arreraSoft.ini', 'w') as configfile:
+                config.write(configfile)
             showinfo("Arrera : Tiger","Logiciel installer")
     
     def __getName(self,soft:str):
