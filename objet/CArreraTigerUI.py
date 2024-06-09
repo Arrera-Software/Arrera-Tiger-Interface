@@ -15,7 +15,7 @@ class CArreraTigerUI :
         self.__system = OS()
         # Fenetre
         self.__screen = Tk()
-        self.__screen.title("Arrera : Tiger")
+        self.__screen.title("Arrera : Store")
         self.__screen.iconphoto(False,PhotoImage(file=self.__imagePath))
         self.__screen.maxsize(700,500)
         self.__screen.minsize(700,500)
