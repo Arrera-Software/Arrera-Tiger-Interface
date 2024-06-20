@@ -4,6 +4,9 @@ from tkinter import filedialog
 from tkinter.messagebox import*
 import threading as th
 import configparser
+if (OS().osLinux()==False):
+    from win32com.client import Dispatch
+    import pythoncom
 
 class CArreraTigerUI :
     def __init__(self):
@@ -73,6 +76,7 @@ class CArreraTigerUI :
             theardIniFile.start()
             theardInstall.join()
             theardIniFile.join()
+            listFolder = self.__getName(soft)
             self.__frameInstall.pack_forget()
             self.__frameMain.pack()
             showinfo("Arrera : Tiger","Logiciel installer")
@@ -101,6 +105,6 @@ class CArreraTigerUI :
         # Lisez le fichier .ini
         config.read('arreraSoft.ini')
         config.set(soft,"exe",listFolder[0]+".exe")
-        config.set(soft,"folder",folder+listFolder[1])
+        config.set(soft,"folder",folder+"/"+listFolder[1])
         with open('arreraSoft.ini', 'w') as configfile:
             config.write(configfile)
